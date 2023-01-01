@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2022/12/30 21:18:25 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/01 15:33:37 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,16 @@ int main(int ac, char **av)
 		printf("file failed to be opened\n");
 		return (1);
 	}
+	line = get_next_line(fd);
+	if (!line)
+	{
+		printf("empty map!\n");
+		return (1);
+	}
 	while (1)
 	{
-		line = get_next_line(fd);
 		file = ft_strjoin(file, line);
+		line = get_next_line(fd);
 		if (!line)
 			break;
 	}
