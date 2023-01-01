@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:13:56 by msouiyeh          #+#    #+#             */
-/*   Updated: 2023/01/01 19:58:04 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/01 23:13:22 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int	main(int ac, char **av)
 	if (parsing(game_data, av))
 		return (EXIT_FAILURE);
 	// printf("SO: %s\n", game_data->vis_settings.so);
-	to_3d(game_data);
+	// to_3d(game_data);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/01 21:07:35 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/01 23:12:57 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,39 @@ void	free_double_array(char **arr)
 	free(arr);
 }
 
+int	check_identifier(t_data	*data, char	**str)
+{
+	if (!ft_strncmp(str[0], "NO", ft_strlen(str[0])))
+		data->vis_settings.no = ft_strdup(str[1]);
+	else if(!ft_strncmp(str[0], "SO", ft_strlen(str[0])))
+		data->vis_settings.so = ft_strdup(str[1]);
+	else if(!ft_strncmp(str[0], "WE", ft_strlen(str[0])))
+		data->vis_settings.we = ft_strdup(str[1]);
+	else if(!ft_strncmp(str[0], "EA", ft_strlen(str[0])))
+		data->vis_settings.ea = ft_strdup(str[1]);
+	else
+		return (0);
+	return (1);
+}
+
 int	textures_parse(t_data *data, char *str)
 {
 	char	**p = ft_split(str, '\n');
-	char	**pp = ft_split(p[0], ' ');
-
-	if (!ft_strncmp(pp[0], "NO", ft_strlen(pp[0])))
-		data->vis_settings.no = ft_strdup(pp[1]);
-	else if(!ft_strncmp(pp[0], "SO", ft_strlen(pp[0])))
-		data->vis_settings.so = ft_strdup(pp[1]);
-	else if(!ft_strncmp(pp[0], "WE", ft_strlen(pp[0])))
-		data->vis_settings.we = ft_strdup(pp[1]);
-	else if(!ft_strncmp(pp[0], "EA", ft_strlen(pp[0])))
-		data->vis_settings.ea = ft_strdup(pp[1]);
-	else
-		return (0);
-	free_double_array(pp);
+	char	**pp;
+	int		i = 0;
+	
+	while (p[i])
+	{
+		pp = ft_split(p[i], ' ');
+		if (!check_identifier(data, pp))
+		{
+			printf("error\nunknown identifier\n");
+			free_double_array(pp);
+			return (0);
+		}
+		free_double_array(pp);
+		i++;
+	}
 	return (1);
 }
 
