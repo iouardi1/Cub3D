@@ -1,7 +1,9 @@
 
   SO ./mandatory/assets/textures/banner.xpm
 NO ./mandatory/assets/textures/wood.xpm
-E4A ./mandatory/assets/textures/blue.xpm
+EA ./mandatory/assets/textures/blue.xpm
+
+
 WE ./mandatory/assets/textures/brick.xpm
 
 
