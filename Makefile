@@ -44,14 +44,14 @@ ihsan_SRCS					=	parsing.c \
 								ray_casting_utils.c \
 								parsing_textures_utiles.c
 
-KARIM_SRCS						=	envirement.c\
-									keys_handlers.c\
-									to_3d.c\
-									mlx_init.c\
-									movements.c\
-									rotation.c\
-									tools.c\
-									wall_building_tools.c
+# KARIM_SRCS						=	envirement.c\
+# 									keys_handlers.c\
+# 									to_3d.c\
+# 									mlx_init.c\
+# 									movements.c\
+# 									rotation.c\
+# 									tools.c\
+# 									wall_building_tools.c
 
 ihsan_SRCS_BONUS				=	parsing_bonus.c \
 									# ray_casting_bonus.c \
@@ -61,14 +61,14 @@ ihsan_SRCS_BONUS				=	parsing_bonus.c \
 									# ray_casting_utils_bonus.c \
 									# parsing_textures_utiles_bonus.c
 
-KARIM_SRCS_BONUS				=	envirement_bonus.c\
-									keys_handlers_bonus.c\
-									to_3d_bonus.c\
-									mlx_init_bonus.c\
-									movements_bonus.c\
-									rotation_bonus.c\
-									tools_bonus.c\
-									wall_building_tools_bonus.c
+# KARIM_SRCS_BONUS				=	envirement_bonus.c\
+# 									keys_handlers_bonus.c\
+# 									to_3d_bonus.c\
+# 									mlx_init_bonus.c\
+# 									movements_bonus.c\
+# 									rotation_bonus.c\
+# 									tools_bonus.c\
+# 									wall_building_tools_bonus.c
 
 
 MANDATORY_SRCS					=	main.c ${ihsan_SRCS} ${KARIM_SRCS}
@@ -88,6 +88,7 @@ ${NAME}:						${MANDATORY_OBJS} ${M_INCLUDES}
 
 								@$(MAKE) -C ./lib
 								$(CC) ${CFLAGS} ${MLXFLAGS} ${LIBS} ${MANDATORY_OBJS} -o ${NAME}
+								# $(CC) ${CFLAGS} $(DBGFLAGS) ${MLXFLAGS} ${LIBS} ${MANDATORY_OBJS} -o ${NAME}
 
 
 M_OBJs/%.o :					%.c ${M_INCLUDES}

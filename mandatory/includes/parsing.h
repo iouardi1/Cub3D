@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achedmi <achedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 20:25:06 by achedmi           #+#    #+#             */
-/*   Updated: 2022/11/06 20:33:43 by achedmi          ###   ########.fr       */
+/*   Updated: 2023/01/01 23:30:02 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 # include "global_includes.h"
 # include "cub.h"
 
-t_exit_status	parsing(t_data	*gamed_data, char **av);
+//
+int parsing(t_data	*data, char **av);
+//
+
 void			set_names(char **elements);
 t_index			ft_get_element_index(char **elements, char *str);
 char			*ft_extratrim(char *str, char *set, char flag);

@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/01 23:12:57 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/02 01:15:01 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,12 @@ int	textures_parse(t_data *data, char *str)
 	char	**p = ft_split(str, '\n');
 	char	**pp;
 	int		i = 0;
-	
-	while (p[i])
+
+	while (p[i] && i < 4)
 	{
 		pp = ft_split(p[i], ' ');
 		if (!check_identifier(data, pp))
 		{
-			printf("error\nunknown identifier\n");
 			free_double_array(pp);
 			return (0);
 		}
@@ -134,6 +133,7 @@ int parsing(t_data	*data, char **av)
 	char	*line = NULL;
 	char	*file = NULL;
 
+	(void) data;
 	if (!check_maps_name(av[1]))
 	{
 		printf("Please enter a valid name\n");
@@ -151,10 +151,11 @@ int parsing(t_data	*data, char **av)
 		printf("empty map!\n");
 		return (1);
 	}
+	file = ft_strjoin(file, line);
 	while (1)
 	{
-		file = ft_strjoin(file, line);
 		line = get_next_line(fd);
+		file = ft_strjoin(file, line);
 		if (!line)
 			break;
 	}
@@ -163,15 +164,15 @@ int parsing(t_data	*data, char **av)
 		printf("textures error\n");
 		return (1);
 	}
-	if (!last_line(file))
-	{
-		printf("invalid map\n");
-		return (1);
-	}
-	if (!check_borders(file))
-	{
-		printf("invalid map\n");
-		return (1);
-	}
+	// if (!last_line(file))
+	// {
+	// 	printf("invalid map\n");
+	// 	return (1);
+	// }
+	// if (!check_borders(file))
+	// {
+	// 	printf("invalid map\n");
+	// 	return (1);
+	// }
 	return (0);
 }
