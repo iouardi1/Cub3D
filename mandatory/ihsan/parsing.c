@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/03 14:12:31 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/03 16:28:36 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,24 @@ int	map_characters(t_data *data, char *str)
 	return (1);
 }
 
+int	a_valid_char(int i, int j, char **p)
+{
+	// printf("p[i][j]     %c\n", p[i][j]);
+	// printf("p[i][j + 1] %c\n", p[i][j + 1]);
+	// printf("p[i][j - 1] %c\n", p[i][j - 1]);
+	// printf("p[i + 1][j] %c\n", p[i + 1][j]);
+	// printf("p[i - 1][j] %c\n", p[i - 1][j]);
+	if (( (p[i][j + 1] != '1' && p[i][j + 1] != '0' && p[i][j + 1] != 'S' && p[i][j + 1] != 'N' && p[i][j + 1] != 'W' && p[i][j + 1] != 'E')))
+		return (0);
+	if (( (p[i][j - 1] != '1' && p[i][j - 1] != '0' && p[i][j - 1] != 'S' && p[i][j - 1] != 'N' && p[i][j - 1] != 'W' && p[i][j - 1] != 'E')))
+		return (0);
+	if (((p[i + 1][j] != '1' && p[i + 1][j] != '0' && p[i + 1][j] != 'S' && p[i + 1][j] != 'N' && p[i + 1][j] != 'W' && p[i + 1][j] != 'E')))
+		return (0);
+	if (( (p[i - 1][j] != '1' && p[i - 1][j] != '0' && p[i - 1][j] != 'S' && p[i - 1][j] != 'N' && p[i - 1][j] != 'W' && p[i - 1][j] != 'E')))
+		return (0);
+	return (1);
+}
+
 int check_spaces(char *str)
 {
 	char **p = ft_split(str, '\n');
@@ -228,7 +246,7 @@ int check_spaces(char *str)
 		j = 0;
 		while (p[i][j])
 		{
-			if (p[i][j] == ' ' && p[i][j + 1] != '1' && p[i][j - 1] != '1' && p[i + 1][j] != '1' && p[i - 1][j] != '1' && p[i - 1][j] != '1')
+			if ((p[i][j] == '0' || p[i][j] == 'S' || p[i][j] == 'N' || p[i][j] == 'W' || p[i][j] == 'E') && (!a_valid_char(i, j, p)))
 				return (0);
 			j++;
 		}
