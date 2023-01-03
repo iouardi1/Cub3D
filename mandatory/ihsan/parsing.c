@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/03 19:02:10 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/03 21:15:56 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,16 +137,46 @@ int	valid_int(char **str)
 int	check_ranges(t_data *data, char l)
 {
 	char	**str;
-	
+	int		i = 0;
+	int		v = 0;
+
+	while (data->vis_settings.f[i])
+	{
+		if (data->vis_settings.f[i] == ',')
+		{
+			v++;
+			if (!ft_isdigit(data->vis_settings.f[i + 1]))
+				return (0);
+		}
+		i++;
+	}
+	if (v > 2)
+		return (0);
+	v = 0;
+	i = 0;
+	while (data->vis_settings.c[i])
+	{
+		if (data->vis_settings.c[i] == ',')
+		{
+			v++;
+			if (!ft_isdigit(data->vis_settings.c[i + 1]))
+				return (0);
+		}
+		i++;
+	}
+	if (v > 2)
+		return (0);
 	if (l == 'f')
 		str = ft_split(data->vis_settings.f, ',');
 	else
 		str = ft_split(data->vis_settings.c, ',');
-	int		i = 0;
 	if (!valid_int(str))
 	    return (0);
+	i = 0;
 	while (str[i])
 	{
+		if (str[i][0] == '\0')
+			return (0);
 		if(ft_atoi(str[i]) > 255 || ft_atoi(str[i]) < 0)
 			return (0);
 		if (l == 'f')
@@ -203,16 +233,11 @@ int	map_characters(t_data *data, char *str)
 	{
 		if (str[i] != '1' && str[i] != '0' && str[i] != 'N' && str[i] != 'E' && str[i] != 'S' && str[i] != 'W' && str[i] != ' ' && str[i] != '\n')
 			return (0);
-		i++;
-	}
-	i = 0;
-	while (str[i])
-	{
 		if (str[i] == 'N' || str[i] == 'E' || str[i] == 'S' || str[i] == 'W')
 			p++;
 		i++;
 	}
-	if (p > 1)
+	if (p != 1)
 		return (0);
 	return (1);
 }
@@ -230,8 +255,23 @@ int	a_valid_char(int i, size_t j, char **p)
 	return (1);
 }
 
+int	check_empty_lines(char *p)
+{
+	int		i = 0;
+
+	while (p[i])
+	{
+		if (p[i] == '\n' && p[i + 1] == '\n')
+            return (0);
+		i++;
+	}
+	return (1);
+}
+
 int check_spaces(char *str)
 {
+	if (!check_empty_lines(str))
+		return (0);
 	char **p = ft_split(str, '\n');
 
 	int		i = 0;
@@ -288,13 +328,6 @@ int parsing(t_data	*data, char **av)
 		return (1);
 	}
 	i = first_line_map(file);
-	// printf("SO: %s\n", data->vis_settings.so);
-	// printf("NO: %s\n", data->vis_settings.no);
-	// printf("EA: %s\n", data->vis_settings.ea);
-	// printf("WE: %s\n", data->vis_settings.we);
-	// printf("F:  %s\n", data->vis_settings.f);
-	// printf("C:  %s\n", data->vis_settings.c);
-	// printf("%s", file + i);
 	if (!last_line(file + i))
 	{
 		printf("invalid map1\n");
