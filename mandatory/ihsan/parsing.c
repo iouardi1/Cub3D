@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/02 16:17:46 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/03 12:40:54 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,46 @@ int	check_identifier(t_data	*data, char	**str)
 	return (1);
 }
 
-int	check_ranges(t_data *data)
+int	valid_int(char **str)
 {
-	char	*str = ft_split(data->vis_settings.f, ',');
+	int		i = 0;
+	int		j;
+	while (str[i])
+	{
+		j = 0;
+		while (str[i][j])
+		{
+		    if (!ft_isdigit(str[i][j]))
+                return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	check_ranges(t_data *data, char l)
+{
+	char	**str;
 	
-	while 
+	if (l == 'f')
+		str = ft_split(data->vis_settings.f, ',');
+	else
+		str = ft_split(data->vis_settings.c, ',');
+	int		i = 0;
+	if (!valid_int(str))
+	    return (0);
+	while (str[i])
+	{
+		if(ft_atoi(str[i]) > 255 || ft_atoi(str[i]) < 0)
+			return (0);
+		if (l == 'f')
+			data->vis_settings.fv[i] = ft_atoi(str[i]);
+		else if (l == 'c')
+			data->vis_settings.cv[i] = ft_atoi(str[i]);
+		i++;
+	}
+	return (1);
 }
 
 int	textures_parse(t_data *data, char *str)
@@ -135,18 +170,34 @@ int	textures_parse(t_data *data, char *str)
 			free_double_array(pp);
 			return (0);
 		}
+		printf ("CHECK\n");
 		free_double_array(pp);
 		i++;
 	}
-	if (!check_ranges(data))
+	if (!check_ranges(data, 'f') || !check_ranges(data, 'c'))
 		return (0);
 	return (1);
 }
+
+int	first_line_map(char *line)
+{
+	int		i = 0;
+
+	while (line[i] && line[i + 1])
+	{
+		if (line[i] == '\n' && line[i + 1] == '1')
+		    return (i + 1);
+        i++;
+	}
+	return (0);
+}
+
 
 int parsing(t_data	*data, char **av)
 {
 	char	*line = NULL;
 	char	*file = NULL;
+	int		i;
 
 	if (!check_maps_name(av[1]))
 	{
@@ -178,21 +229,22 @@ int parsing(t_data	*data, char **av)
 		printf("textures error\n");
 		return (1);
 	}
+	i = first_line_map(file);
 	// printf("SO: %s\n", data->vis_settings.so);
 	// printf("NO: %s\n", data->vis_settings.no);
 	// printf("EA: %s\n", data->vis_settings.ea);
 	// printf("WE: %s\n", data->vis_settings.we);
 	// printf("F:  %s\n", data->vis_settings.f);
 	// printf("C:  %s\n", data->vis_settings.c);
-	// if (!last_line(file))
-	// {
-	// 	printf("invalid map\n");
-	// 	return (1);
-	// }
-	// if (!check_borders(file))
-	// {
-	// 	printf("invalid map\n");
-	// 	return (1);
-	// }
+	if (!last_line(file + i))
+	{
+		printf("invalid map\n");
+		return (1);
+	}
+	if (!check_borders(file))
+	{
+		printf("invalid map\n");
+		return (1);
+	}
 	return (0);
 }

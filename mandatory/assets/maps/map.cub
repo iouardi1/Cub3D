@@ -1,10 +1,19 @@
 
-  SO ./mandatory/assets/textures/banner.xpm
+    
+ 
+ 
+SO ./mandatory/assets/textures/banner.xpm
 NO ./mandatory/assets/textures/wood.xpm
 EA ./mandatory/assets/textures/blue.xpm
 
 
+
+
+
 WE ./mandatory/assets/textures/brick.xpm
+
+
+
 
 
 
