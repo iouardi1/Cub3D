@@ -6,12 +6,13 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:13:56 by msouiyeh          #+#    #+#             */
-/*   Updated: 2023/01/01 23:13:22 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/03 13:54:25 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub.h"
-
+//ONE PLAYER
+//TAB
 int	main(int ac, char **av)
 {
 	t_data	*game_data;

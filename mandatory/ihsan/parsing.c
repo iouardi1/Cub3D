@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/03 12:40:54 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/03 14:12:31 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ int	check_maps_name(char *name)
 int	last_line(char	*str)
 {
 	size_t		i;
-
-	i = ft_strlen(str);
+	
+	i = 0;
+	while (str[i])
+        i++;
 	if (str[i - 1] == '1' || str[i - 1] == ' ' || str[i - 1] == '\t')
 		return (1);
     return (0);
@@ -170,7 +172,6 @@ int	textures_parse(t_data *data, char *str)
 			free_double_array(pp);
 			return (0);
 		}
-		printf ("CHECK\n");
 		free_double_array(pp);
 		i++;
 	}
@@ -192,7 +193,49 @@ int	first_line_map(char *line)
 	return (0);
 }
 
+int	map_characters(t_data *data, char *str)
+{
+	int		i = 0;
+	int		p = 0;
 
+	(void)data;
+	while (str[i])
+	{
+		if (str[i] != '1' && str[i] != '0' && str[i] != 'N' && str[i] != 'E' && str[i] != 'S' && str[i] != 'W' && str[i] != ' ' && str[i] != '\n')
+			return (0);
+		i++;
+	}
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == 'N' || str[i] == 'E' || str[i] == 'S' || str[i] == 'W')
+			p++;
+		i++;
+	}
+	if (p > 1)
+		return (0);
+	return (1);
+}
+
+int check_spaces(char *str)
+{
+	char **p = ft_split(str, '\n');
+
+	int		i = 0;
+	int		j;
+	while (p[i])
+    {
+		j = 0;
+		while (p[i][j])
+		{
+			if (p[i][j] == ' ' && p[i][j + 1] != '1' && p[i][j - 1] != '1' && p[i + 1][j] != '1' && p[i - 1][j] != '1' && p[i - 1][j] != '1')
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
 int parsing(t_data	*data, char **av)
 {
 	char	*line = NULL;
@@ -236,15 +279,26 @@ int parsing(t_data	*data, char **av)
 	// printf("WE: %s\n", data->vis_settings.we);
 	// printf("F:  %s\n", data->vis_settings.f);
 	// printf("C:  %s\n", data->vis_settings.c);
+	// printf("%s", file + i);
 	if (!last_line(file + i))
 	{
-		printf("invalid map\n");
+		printf("invalid map1\n");
 		return (1);
 	}
-	if (!check_borders(file))
+	if (!check_borders(file + i))
 	{
-		printf("invalid map\n");
+		printf("invalid map2\n");
 		return (1);
+	}
+	if (!map_characters(data, file + i))
+	{
+		printf("invalid map3\n");
+        return (1);
+	}
+	if (!check_spaces(file + i))
+	{
+		printf("invalid map4\n");
+        return (1);
 	}
 	return (0);
 }
