@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/03 21:15:56 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/05 19:17:37 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,26 +95,61 @@ void	free_double_array(char **arr)
 	free(arr);
 }
 
+static	int	no_c = 0;
+static	int	so_c = 0;
+static	int	ea_c = 0;
+static	int	we_c = 0;
+static	int	f_c = 0;
+static	int	c_c = 0;
+
 int	check_identifier(t_data	*data, char	**str)
 {
 	if (str[2])
 		return (0);
 	if (!ft_strncmp(str[0], "NO", ft_strlen(str[0])))
+	{
+		no_c += 1;
 		data->vis_settings.no = ft_strdup(str[1]);
+	}
 	else if(!ft_strncmp(str[0], "SO", ft_strlen(str[0])))
+	{
+		so_c += 1;
 		data->vis_settings.so = ft_strdup(str[1]);
+	}
 	else if(!ft_strncmp(str[0], "WE", ft_strlen(str[0])))
+	{
+		we_c += 1;
 		data->vis_settings.we = ft_strdup(str[1]);
+	}
 	else if(!ft_strncmp(str[0], "EA", ft_strlen(str[0])))
+	{
+		ea_c += 1;
 		data->vis_settings.ea = ft_strdup(str[1]);
-	else if(!ft_strncmp(str[0], "F", ft_strlen(str[0])))
-		data->vis_settings.f = ft_strdup(str[1]);
-	else if(!ft_strncmp(str[0], "C", ft_strlen(str[0])))
-		data->vis_settings.c = ft_strdup(str[1]);
+	}
 	else
 		return (0);
 	return (1);
 }
+
+int	check_identifier1(t_data *data, char **str)
+{
+	if (str[2])
+		return (0);
+	else if(str[0] && !ft_strncmp(str[0], "F", ft_strlen(str[0])))
+	{
+		f_c += 1;
+		data->vis_settings.f = ft_strdup(str[1]);
+	}
+	else if(str[0] && !ft_strncmp(str[0], "C", ft_strlen(str[0])))
+	{
+		c_c += 1;
+		data->vis_settings.c = ft_strdup(str[1]);
+	}
+	else
+		return (0);
+	return (1);
+}
+
 
 int	valid_int(char **str)
 {
@@ -150,7 +185,7 @@ int	check_ranges(t_data *data, char l)
 		}
 		i++;
 	}
-	if (v > 2)
+	if (v != 2)
 		return (0);
 	v = 0;
 	i = 0;
@@ -164,7 +199,7 @@ int	check_ranges(t_data *data, char l)
 		}
 		i++;
 	}
-	if (v > 2)
+	if (v != 2)
 		return (0);
 	if (l == 'f')
 		str = ft_split(data->vis_settings.f, ',');
@@ -194,10 +229,10 @@ int	textures_parse(t_data *data, char *str)
 	char	**pp;
 	int		i = 0;
 
-	while (p[i] && i < 6)
+	while (p[i] && i < 4)
 	{
 		pp = ft_split(p[i], ' ');
-		if (!check_identifier(data, pp))
+		if (!pp[0] || !pp[1] || !check_identifier(data, pp))
 		{
 			free_double_array(pp);
 			return (0);
@@ -205,6 +240,20 @@ int	textures_parse(t_data *data, char *str)
 		free_double_array(pp);
 		i++;
 	}
+	while (p[i] && i < 6)
+	{
+		pp = ft_split(p[i], ' ');
+		if (!pp[0] || !pp[1] || !check_identifier1(data, pp))
+		{
+			free_double_array(pp);
+			return (0);
+		}
+		free_double_array(pp);
+		i++;
+		
+	}
+	if (no_c != 1 || so_c != 1 || we_c != 1 || ea_c != 1 || f_c != 1 || c_c != 1)
+		return (0);
 	if (!check_ranges(data, 'f') || !check_ranges(data, 'c'))
 		return (0);
 	return (1);
@@ -268,14 +317,15 @@ int	check_empty_lines(char *p)
 	return (1);
 }
 
-int check_spaces(char *str)
+int check_spaces(t_data	*data, char *str)
 {
 	if (!check_empty_lines(str))
 		return (0);
 	char **p = ft_split(str, '\n');
 
-	int		i = 0;
+	size_t		i = 0;
 	size_t		j;
+	size_t		length = 0;
 	while (p[i])
     {
 		j = 0;
@@ -287,8 +337,13 @@ int check_spaces(char *str)
 				return (0);
 			j++;
 		}
+		if (length < j)
+			length = j;
 		i++;
 	}
+	data->map.map = p;
+	data->map.height = i;
+	data->map.length = length;
 	return (1);
 }
 int parsing(t_data	*data, char **av)
@@ -343,7 +398,7 @@ int parsing(t_data	*data, char **av)
 		printf("invalid map3\n");
         return (1);
 	}
-	if (!check_spaces(file + i))
+	if (!check_spaces(data, file + i))
 	{
 		printf("invalid map4\n");
         return (1);
