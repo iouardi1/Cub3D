@@ -37,21 +37,21 @@ M_INCLUDES						=	$(addprefix ${MANDATORY_INCLUDES_PATH}/, cub.h global_includes
 B_INCLUDES						=	$(addprefix ${BONUS_INCLUDES_PATH}/, cub_bonus.h global_includes_bonus.h settings_bonus.h parsing_bonus.h)
 
 ihsan_SRCS					=	parsing.c \
-								# ray_casting.c \
+								ray_casting.c \
 								utils.c \
-								parsing_texures.c \
-								parse_map_utils.c \
 								ray_casting_utils.c \
+								# parse_map_utils.c \
+								parsing_texures.c \
 								parsing_textures_utiles.c
 
-# KARIM_SRCS						=	envirement.c\
-# 									keys_handlers.c\
-# 									to_3d.c\
-# 									mlx_init.c\
-# 									movements.c\
-# 									rotation.c\
-# 									tools.c\
-# 									wall_building_tools.c
+KARIM_SRCS						=	envirement.c\
+									keys_handlers.c\
+									to_3d.c\
+									mlx_init.c\
+									movements.c\
+									rotation.c\
+									tools.c\
+									wall_building_tools.c
 
 ihsan_SRCS_BONUS				=	parsing_bonus.c \
 									# ray_casting_bonus.c \

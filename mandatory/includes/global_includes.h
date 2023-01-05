@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global_includes.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achedmi <achedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 15:34:09 by achedmi           #+#    #+#             */
-/*   Updated: 2022/11/12 15:01:24 by achedmi          ###   ########.fr       */
+/*   Updated: 2023/01/06 00:07:29 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ typedef struct s_intersections
 }	t_inter;
 
 typedef struct s_player {
-	int		fixed_x;
-	int		fixed_y;
+	// int		fixed_x;
+	// int		fixed_y;
 	int		map_x;
 	int		map_y;
 	double	pixel_x;
@@ -120,7 +120,7 @@ typedef struct s_data
 	t_map				map;
 	t_mlx				mlx_settings;
 	t_player			player;
-	t_screen			screen;
+	// t_screen			screen;
 }	t_data;
 
 t_coordinates	get_wall_intersection(t_data *game_data, double angle);

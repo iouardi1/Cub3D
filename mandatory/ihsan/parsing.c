@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/05 19:17:37 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/06 00:30:23 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "ihsan.h"
 // #include "includes/global_includes.h"
 // #include "includes/parsing.h"
-// #include "includes/settings.h"
+#include "../includes/settings.h"
 // #include "includes/cub.h"
 
 
@@ -226,6 +226,7 @@ int	check_ranges(t_data *data, char l)
 int	textures_parse(t_data *data, char *str)
 {
 	char	**p = ft_split(str, '\n');
+	char	*ppp;
 	char	**pp;
 	int		i = 0;
 
@@ -250,7 +251,14 @@ int	textures_parse(t_data *data, char *str)
 		}
 		free_double_array(pp);
 		i++;
-		
+	}
+	while (p[i])
+	{
+		ppp = ft_strtrim(p[i], " ");
+		if (ppp[0] && ppp[0] != '1')
+			return (0);
+		i++;
+		free(ppp);
 	}
 	if (no_c != 1 || so_c != 1 || we_c != 1 || ea_c != 1 || f_c != 1 || c_c != 1)
 		return (0);
@@ -272,18 +280,56 @@ int	first_line_map(char *line)
 	return (0);
 }
 
-int	map_characters(t_data *data, char *str)
-{
-	int		i = 0;
-	int		p = 0;
+ void	check_players_angle(t_data *data)
+ {
+	if (data->map.map[data->player.map_y][data->player.map_x] == 'S')
+		data->player.angle = (3 * M_PI) / 2;
+	if (data->map.map[data->player.map_y][data->player.map_x] == 'N')
+		data->player.angle = M_PI_2;
+	if (data->map.map[data->player.map_y][data->player.map_x] == 'W')
+		data->player.angle = M_PI;
+	if (data->map.map[data->player.map_y][data->player.map_x] == 'E')
+		data->player.angle = 0;
+	data->player.is_down = 0;
+	data->player.is_up = 0;
+	data->player.is_left = 0;
+	data->player.is_right = 0;
+	data->player.is_rotate_right = 0;
+	data->player.is_rotate_left = 0;
+ }
 
-	(void)data;
-	while (str[i])
+int	get_out(t_data *game_data)
+{
+	free(game_data->vis_settings.cv);
+	free(game_data->vis_settings.fv);
+	free(game_data);
+	exit (EXIT_SUCCESS);
+}
+
+int	get_players_position(t_data	*data)
+{
+	int        i = 0;
+    int        p = 0;
+    int        j;
+
+	while (data->map.map[i])
 	{
-		if (str[i] != '1' && str[i] != '0' && str[i] != 'N' && str[i] != 'E' && str[i] != 'S' && str[i] != 'W' && str[i] != ' ' && str[i] != '\n')
-			return (0);
-		if (str[i] == 'N' || str[i] == 'E' || str[i] == 'S' || str[i] == 'W')
-			p++;
+		j = 0;
+		while (data->map.map[i][j])
+        {
+			if (data->map.map[i][j] != '1' && data->map.map[i][j] != '0' && data->map.map[i][j] != 'N' && data->map.map[i][j] != 'E' && data->map.map[i][j] != 'S' && data->map.map[i][j] != 'W' && data->map.map[i][j] != ' ' && data->map.map[i][j] != '\n')
+				return (0);
+			if (data->map.map[i][j] == 'N' || data->map.map[i][j] == 'W' || data->map.map[i][j] == 'E' || data->map.map[i][j] == 'S')
+			{
+				data->player.map_x = j;
+				data->player.map_y = i;
+				data->player.pixel_x = j * BLOCK_SIZE + (BLOCK_SIZE >> 1);
+				data->player.pixel_y = i * BLOCK_SIZE + (BLOCK_SIZE >> 1);
+				check_players_angle(data);
+				p++;
+			}
+			j++;
+		}
 		i++;
 	}
 	if (p != 1)
@@ -393,14 +439,14 @@ int parsing(t_data	*data, char **av)
 		printf("invalid map2\n");
 		return (1);
 	}
-	if (!map_characters(data, file + i))
-	{
-		printf("invalid map3\n");
-        return (1);
-	}
 	if (!check_spaces(data, file + i))
 	{
 		printf("invalid map4\n");
+        return (1);
+	}
+	if (!get_players_position(data))
+	{
+		printf("invalid map3\n");
         return (1);
 	}
 	return (0);
