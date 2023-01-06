@@ -22,7 +22,7 @@ VPATH							=	${MANDATORY_SRCS_PATH} ${MANDATORY_INCLUDES_PATH} ${ihsan_VPATH} $
 
 CC								=	cc
 
-CFLAGS							=	-Wall -Wextra -Werror -g -fsanitize=address #${DBGFLAGS}
+CFLAGS							=	-Wall -Wextra -Werror #${DBGFLAGS}
 
 DBGFLAGS						=	-g -fsanitize=address
 

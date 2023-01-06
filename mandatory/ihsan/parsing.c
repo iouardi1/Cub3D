@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/06 00:30:23 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/06 20:30:57 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,33 @@ int    check_borders(char *str)
 	char	**p = ft_split(str, '\n');
 
 	if (!check_roof_and_floor(p[0]))
+	{
+		free_double_array(p);
 		return (0);
+	}
 	while (p[i])
 		i++;
 	if (!check_roof_and_floor(p[i - 1]))
+	{
+		free_double_array(p);
 		return (0);
+	}
 	while (p[j] && (p[j][0] == '1' || p[j][0] == ' ' || p[j][0] == '\t'))
 		j++;
 	if (i != j)
+	{
+		free_double_array(p);
     	return (0);
+	}
 	j = 0;
 	while (p[j] && (p[j][ft_strlen(p[j]) - 1] == '1' || p[j][ft_strlen(p[j]) - 1] == ' ' || p[j][ft_strlen(p[j]) - 1] == '\t'))
 		j++;
 	if (i != j)
+	{
+		free_double_array(p);
     	return (0);
+	}
+	free_double_array(p);
 	return (1);
 }
 
@@ -67,7 +80,11 @@ int	check_maps_name(char *name)
 	while (str[i])
         i++;
 	if (ft_strncmp(str[i - 1], "cub", ft_strlen(str[i - 1])))
+	{
+		free_double_array(str);
 	    return (0);
+	}
+	free_double_array(str);
     return (1);
 }
 
@@ -206,20 +223,30 @@ int	check_ranges(t_data *data, char l)
 	else
 		str = ft_split(data->vis_settings.c, ',');
 	if (!valid_int(str))
+	{
+		free_double_array(str);
 	    return (0);
+	}
 	i = 0;
 	while (str[i])
 	{
 		if (str[i][0] == '\0')
+		{
+			free_double_array(str);
 			return (0);
+		}
 		if(ft_atoi(str[i]) > 255 || ft_atoi(str[i]) < 0)
+		{
+			free_double_array(str);
 			return (0);
+		}
 		if (l == 'f')
 			data->vis_settings.fv[i] = ft_atoi(str[i]);
 		else if (l == 'c')
 			data->vis_settings.cv[i] = ft_atoi(str[i]);
 		i++;
 	}
+	free_double_array(str);
 	return (1);
 }
 
@@ -235,6 +262,7 @@ int	textures_parse(t_data *data, char *str)
 		pp = ft_split(p[i], ' ');
 		if (!pp[0] || !pp[1] || !check_identifier(data, pp))
 		{
+			free_double_array(p);
 			free_double_array(pp);
 			return (0);
 		}
@@ -247,6 +275,7 @@ int	textures_parse(t_data *data, char *str)
 		if (!pp[0] || !pp[1] || !check_identifier1(data, pp))
 		{
 			free_double_array(pp);
+			free_double_array(p);
 			return (0);
 		}
 		free_double_array(pp);
@@ -256,10 +285,15 @@ int	textures_parse(t_data *data, char *str)
 	{
 		ppp = ft_strtrim(p[i], " ");
 		if (ppp[0] && ppp[0] != '1')
+		{
+			free_double_array(p);
+			free(ppp);
 			return (0);
+		}
 		i++;
 		free(ppp);
 	}
+	free_double_array(p);
 	if (no_c != 1 || so_c != 1 || we_c != 1 || ea_c != 1 || f_c != 1 || c_c != 1)
 		return (0);
 	if (!check_ranges(data, 'f') || !check_ranges(data, 'c'))
@@ -395,7 +429,8 @@ int check_spaces(t_data	*data, char *str)
 int parsing(t_data	*data, char **av)
 {
 	char	*line = NULL;
-	char	*file = NULL;
+	char	*file = ft_strdup("\0");
+	char	*tmp;
 	int		i;
 
 	if (!check_maps_name(av[1]))
@@ -413,15 +448,26 @@ int parsing(t_data	*data, char **av)
 	if (!line)
 	{
 		printf("empty map!\n");
+		free(line);
 		return (1);
 	}
+	tmp = file;
 	file = ft_strjoin(file, line);
+	free(tmp);
+	free(line);
+    line = NULL;
 	while (1)
 	{
 		line = get_next_line(fd);
-		file = ft_strjoin(file, line);
+		tmp = file;
+		file = ft_strjoin1(tmp, line);
+		free(tmp);
 		if (!line)
+		{
+			free(line);
 			break;
+		}
+		free(line);
 	}
 	if (!textures_parse(data, file))
 	{

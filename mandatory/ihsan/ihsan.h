@@ -7,6 +7,8 @@
 
 char	**ft_split(char const *s, char c);
 char	*ft_strnstr(const char	*big, const char *little, size_t len);
+int     check_maps_name(char *name);
+void	free_double_array(char **arr);
 
 
 #endif
