@@ -1,26 +1,33 @@
- SO ./mandatory/assets/textures/banner.xpm
+SO ./mandatory/assets/textures/banner.xpm       
 
 
 
-NO ./mandatory/assets/textures/wood.xpm   
+NO ./mandatory/assets/textures/wood.xpm
 
-EA ./mandatory/assets/textures/blue.xpm    
+EA ./mandatory/assets/textures/blue.xpm
+
+    
+     
+
+     
+WE ./mandatory/assets/textures/brick.xpm
+       
+F 79,45,101    
+
+      
+
+C 79,54,10
 
 
+    
 
-
-
-WE      ./mandatory/assets/textures/brick.xpm   
-
-C 79,20,10
-F 0,45,251
 
    
 
     
 
 
-11111111111111111111111111111111111  1111111111111111111111111    
+11111111111111111111111111111111111  1111111111111111111111111111
 111111111111111111111111111111111111111111111111111111111111 
 111000000000000000000000000000000000000000000000001111111111  
 111111111111111111111111111111111111111111111111111111111111  111

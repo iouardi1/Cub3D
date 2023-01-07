@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/06 20:30:57 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/07 01:58:25 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 #include <stdio.h>
 #include <math.h>
 #include "ihsan.h"
-// #include "includes/global_includes.h"
-// #include "includes/parsing.h"
 #include "../includes/settings.h"
-// #include "includes/cub.h"
 
+
+static	int	no_c = 0;
+static	int	so_c = 0;
+static	int	ea_c = 0;
+static	int	we_c = 0;
+static	int	f_c = 0;
+static	int	c_c = 0;
 
 int	check_roof_and_floor(char *str)
 {
 	size_t        i;
 
     i = 0;
-	while (str[i] && (str[i] == '1' || str[i] == ' ' || str[i] == '\t'))
+	while (str[i] && (str[i] == '1' || str[i] == ' '))
 		i++;
 	if (i != ft_strlen(str))
 		return (0);
@@ -38,27 +42,15 @@ int    check_borders(char *str)
 	int		j = 0;
 	char	**p = ft_split(str, '\n');
 
-	if (!check_roof_and_floor(p[0]))
-	{
-		free_double_array(p);
-		return (0);
-	}
 	while (p[i])
 		i++;
-	if (!check_roof_and_floor(p[i - 1]))
+	if (!check_roof_and_floor(p[0]) || !check_roof_and_floor(p[i - 1]))
 	{
 		free_double_array(p);
 		return (0);
 	}
-	while (p[j] && (p[j][0] == '1' || p[j][0] == ' ' || p[j][0] == '\t'))
-		j++;
-	if (i != j)
-	{
-		free_double_array(p);
-    	return (0);
-	}
-	j = 0;
-	while (p[j] && (p[j][ft_strlen(p[j]) - 1] == '1' || p[j][ft_strlen(p[j]) - 1] == ' ' || p[j][ft_strlen(p[j]) - 1] == '\t'))
+	while (p[j] && (p[j][0] == '1' || p[j][0] == ' ') && (p[j][ft_strlen(p[j]) - 1] == '1' \
+		|| p[j][ft_strlen(p[j]) - 1] == ' '))
 		j++;
 	if (i != j)
 	{
@@ -112,12 +104,22 @@ void	free_double_array(char **arr)
 	free(arr);
 }
 
-static	int	no_c = 0;
-static	int	so_c = 0;
-static	int	ea_c = 0;
-static	int	we_c = 0;
-static	int	f_c = 0;
-static	int	c_c = 0;
+int	check_identifier1(t_data *data, char **str)
+{
+	if(str[0] && !ft_strncmp(str[0], "F", ft_strlen(str[0])))
+	{
+		f_c += 1;
+		data->vis_settings.f = ft_strdup(str[1]);
+	}
+	else if(str[0] && !ft_strncmp(str[0], "C", ft_strlen(str[0])))
+	{
+		c_c += 1;
+		data->vis_settings.c = ft_strdup(str[1]);
+	}
+	else
+		return (0);
+	return (1);
+}
 
 int	check_identifier(t_data	*data, char	**str)
 {
@@ -143,35 +145,17 @@ int	check_identifier(t_data	*data, char	**str)
 		ea_c += 1;
 		data->vis_settings.ea = ft_strdup(str[1]);
 	}
-	else
+	else if (!check_identifier1(data, str))
 		return (0);
 	return (1);
 }
-
-int	check_identifier1(t_data *data, char **str)
-{
-	if (str[2])
-		return (0);
-	else if(str[0] && !ft_strncmp(str[0], "F", ft_strlen(str[0])))
-	{
-		f_c += 1;
-		data->vis_settings.f = ft_strdup(str[1]);
-	}
-	else if(str[0] && !ft_strncmp(str[0], "C", ft_strlen(str[0])))
-	{
-		c_c += 1;
-		data->vis_settings.c = ft_strdup(str[1]);
-	}
-	else
-		return (0);
-	return (1);
-}
-
 
 int	valid_int(char **str)
 {
-	int		i = 0;
+	int		i;
 	int		j;
+
+	i = 0;
 	while (str[i])
 	{
 		j = 0;
@@ -186,37 +170,53 @@ int	valid_int(char **str)
 	return (1);
 }
 
-int	check_ranges(t_data *data, char l)
+int	check_ranges_supp1(char	*str)
 {
-	char	**str;
-	int		i = 0;
-	int		v = 0;
+	int		i;
+	int		v;
 
-	while (data->vis_settings.f[i])
+	i = 0;
+	v = 0;
+	while (str[i])
 	{
-		if (data->vis_settings.f[i] == ',')
+		if (str[i] == ',')
 		{
 			v++;
-			if (!ft_isdigit(data->vis_settings.f[i + 1]))
+			if (!ft_isdigit(str[i + 1]))
 				return (0);
 		}
 		i++;
 	}
 	if (v != 2)
 		return (0);
-	v = 0;
+	return (1);
+}
+
+int	check_ranges_supp2(t_data *data, char **str, char l)
+{
+	int		i;
+
 	i = 0;
-	while (data->vis_settings.c[i])
+	while (str[i])
 	{
-		if (data->vis_settings.c[i] == ',')
-		{
-			v++;
-			if (!ft_isdigit(data->vis_settings.c[i + 1]))
-				return (0);
-		}
+		if (str[i][0] == '\0')
+			return (0);
+		if (ft_atoi(str[i]) > 255 || ft_atoi(str[i]) < 0)
+			return (0);
+		if (l == 'f')
+			data->vis_settings.fv[i] = ft_atoi(str[i]);
+		else if (l == 'c')
+			data->vis_settings.cv[i] = ft_atoi(str[i]);
 		i++;
 	}
-	if (v != 2)
+	return (1);
+}
+
+int	check_ranges(t_data *data, char l)
+{
+	char	**str;
+
+	if (!check_ranges_supp1(data->vis_settings.f) || !check_ranges_supp1(data->vis_settings.c))
 		return (0);
 	if (l == 'f')
 		str = ft_split(data->vis_settings.f, ',');
@@ -227,71 +227,77 @@ int	check_ranges(t_data *data, char l)
 		free_double_array(str);
 	    return (0);
 	}
-	i = 0;
-	while (str[i])
+	if (!check_ranges_supp2(data, str, l))
 	{
-		if (str[i][0] == '\0')
-		{
-			free_double_array(str);
-			return (0);
-		}
-		if(ft_atoi(str[i]) > 255 || ft_atoi(str[i]) < 0)
-		{
-			free_double_array(str);
-			return (0);
-		}
-		if (l == 'f')
-			data->vis_settings.fv[i] = ft_atoi(str[i]);
-		else if (l == 'c')
-			data->vis_settings.cv[i] = ft_atoi(str[i]);
-		i++;
+		free_double_array(str);
+		return (0);
 	}
 	free_double_array(str);
 	return (1);
 }
 
-int	textures_parse(t_data *data, char *str)
+int textures_parse_supp1(t_data *data, char **p)
 {
-	char	**p = ft_split(str, '\n');
-	char	*ppp;
+	int		i;
+	int		j;
 	char	**pp;
-	int		i = 0;
 
-	while (p[i] && i < 4)
+	i = 0;
+	j = 0;
+	while (p[j] && i < 6)
 	{
-		pp = ft_split(p[i], ' ');
-		if (!pp[0] || !pp[1] || !check_identifier(data, pp))
+		pp = ft_split(p[j], ' ');
+		if (!pp[0])
 		{
-			free_double_array(p);
+			j++;
+			continue ;
+		}
+		if (!pp[1] || !check_identifier(data, pp))
+		{
 			free_double_array(pp);
 			return (0);
 		}
 		free_double_array(pp);
 		i++;
+		j++;
 	}
-	while (p[i] && i < 6)
-	{
-		pp = ft_split(p[i], ' ');
-		if (!pp[0] || !pp[1] || !check_identifier1(data, pp))
-		{
-			free_double_array(pp);
-			free_double_array(p);
-			return (0);
-		}
-		free_double_array(pp);
-		i++;
-	}
+	return (j);
+}
+
+int	textures_parse_supp2(char **p, int i)
+{
+	char	*ppp;
+
 	while (p[i])
 	{
 		ppp = ft_strtrim(p[i], " ");
 		if (ppp[0] && ppp[0] != '1')
 		{
-			free_double_array(p);
 			free(ppp);
 			return (0);
 		}
 		i++;
 		free(ppp);
+	}
+	return (1);
+}
+
+int	textures_parse(t_data *data, char *str)
+{
+	char	**p;
+	int		i;
+
+	p = ft_split(str, '\n');
+	i = textures_parse_supp1(data, p);
+	if (!i)
+	{
+		free_double_array(p);
+		return (0);
+	}
+	if (!textures_parse_supp2(p, i))
+	{
+		free_double_array(p);
+		return (0);
 	}
 	free_double_array(p);
 	if (no_c != 1 || so_c != 1 || we_c != 1 || ea_c != 1 || f_c != 1 || c_c != 1)
@@ -330,38 +336,55 @@ int	first_line_map(char *line)
 	data->player.is_right = 0;
 	data->player.is_rotate_right = 0;
 	data->player.is_rotate_left = 0;
- }
+}
 
 int	get_out(t_data *game_data)
 {
 	free(game_data->vis_settings.cv);
 	free(game_data->vis_settings.fv);
 	free(game_data);
-	exit (EXIT_SUCCESS);
+	exit (0);
+}
+
+void	get_players_position_supp1(t_data *data, int i, int j)
+{
+	data->player.map_x = j;
+	data->player.map_y = i;
+	data->player.pixel_x = j * BLOCK_SIZE + (BLOCK_SIZE >> 1);
+	data->player.pixel_y = i * BLOCK_SIZE + (BLOCK_SIZE >> 1);
+}
+
+int	get_players_position_supp2(t_data *data, int i, int j, int p)
+{
+	if (data->map.map[i][j] != '1' && data->map.map[i][j] != '0' \
+		&& data->map.map[i][j] != 'N' && data->map.map[i][j] != 'E' \
+			&& data->map.map[i][j] != 'S' && data->map.map[i][j] != 'W' \
+				&& data->map.map[i][j] != ' ' && data->map.map[i][j] != '\n')
+					return (0);
+	if (data->map.map[i][j] == 'N' || data->map.map[i][j] == 'W' || \
+		data->map.map[i][j] == 'E' || data->map.map[i][j] == 'S')
+	{
+		get_players_position_supp1(data, i, j);
+		check_players_angle(data);
+		p++;
+	}
+	return (p);
 }
 
 int	get_players_position(t_data	*data)
 {
-	int        i = 0;
-    int        p = 0;
+	int        i;
+    int        p;
     int        j;
 
+	i = 0;
+	p = 0;
 	while (data->map.map[i])
 	{
 		j = 0;
 		while (data->map.map[i][j])
         {
-			if (data->map.map[i][j] != '1' && data->map.map[i][j] != '0' && data->map.map[i][j] != 'N' && data->map.map[i][j] != 'E' && data->map.map[i][j] != 'S' && data->map.map[i][j] != 'W' && data->map.map[i][j] != ' ' && data->map.map[i][j] != '\n')
-				return (0);
-			if (data->map.map[i][j] == 'N' || data->map.map[i][j] == 'W' || data->map.map[i][j] == 'E' || data->map.map[i][j] == 'S')
-			{
-				data->player.map_x = j;
-				data->player.map_y = i;
-				data->player.pixel_x = j * BLOCK_SIZE + (BLOCK_SIZE >> 1);
-				data->player.pixel_y = i * BLOCK_SIZE + (BLOCK_SIZE >> 1);
-				check_players_angle(data);
-				p++;
-			}
+			p = get_players_position_supp2(data, i, j, p);
 			j++;
 		}
 		i++;
@@ -373,14 +396,20 @@ int	get_players_position(t_data	*data)
 
 int	a_valid_char(int i, size_t j, char **p)
 {
-	if (p[i][j + 1] != '1' && p[i][j + 1] != '0' && p[i][j + 1] != 'S' && p[i][j + 1] != 'N' && p[i][j + 1] != 'W' && p[i][j + 1] != 'E')
+	if (p[i][j + 1] != '1' && p[i][j + 1] != '0' && p[i][j + 1] != 'S' \
+		&& p[i][j + 1] != 'N' && p[i][j + 1] != 'W' && p[i][j + 1] != 'E')
+			return (0);
+	if ((p[i][j - 1] != '1' && p[i][j - 1] != '0' && p[i][j - 1] != 'S' \
+		&& p[i][j - 1] != 'N' && p[i][j - 1] != 'W' && p[i][j - 1] != 'E'))
 		return (0);
-	if ((p[i][j - 1] != '1' && p[i][j - 1] != '0' && p[i][j - 1] != 'S' && p[i][j - 1] != 'N' && p[i][j - 1] != 'W' && p[i][j - 1] != 'E'))
-		return (0);
-	if (j >= ft_strlen(p[i + 1]) || (p[i + 1][j] != '1' && p[i + 1][j] != '0' && p[i + 1][j] != 'S' && p[i + 1][j] != 'N' && p[i + 1][j] != 'W' && p[i + 1][j] != 'E'))
-		return (0);
-	if (j >= ft_strlen(p[i - 1]) || (p[i - 1][j] != '1' && p[i - 1][j] != '0' && p[i - 1][j] != 'S' && p[i - 1][j] != 'N' && p[i - 1][j] != 'W' && p[i - 1][j] != 'E'))
-		return (0);
+	if (j >= ft_strlen(p[i + 1]) || (p[i + 1][j] != '1' && p[i + 1][j] != '0' \
+		&& p[i + 1][j] != 'S' && p[i + 1][j] != 'N' && p[i + 1][j] != 'W' \
+			&& p[i + 1][j] != 'E'))
+				return (0);
+	if (j >= ft_strlen(p[i - 1]) || (p[i - 1][j] != '1' && p[i - 1][j] != '0' \
+		&& p[i - 1][j] != 'S' && p[i - 1][j] != 'N' && p[i - 1][j] != 'W' \
+			&& p[i - 1][j] != 'E'))
+			return (0);
 	return (1);
 }
 
@@ -397,26 +426,37 @@ int	check_empty_lines(char *p)
 	return (1);
 }
 
+int    check_spaces_supp(char **p, int i, int j)
+{
+	while (p[i][j])
+	{
+		if (p[i][j] == '0' && (!a_valid_char(i, j, p)))
+			return (0);
+		if ((p[i][j] == 'S' || p[i][j] == 'N' || p[i][j] == 'W' || p[i][j] == 'E') \
+			&& (!a_valid_char(i, j, p)))
+			return (0);
+		j++;
+	}
+	return (1);
+}
+
 int check_spaces(t_data	*data, char *str)
 {
+	size_t		i;
+	size_t		j;
+	size_t		length;
+	char		**p;
+
 	if (!check_empty_lines(str))
 		return (0);
-	char **p = ft_split(str, '\n');
-
-	size_t		i = 0;
-	size_t		j;
-	size_t		length = 0;
+	p = ft_split(str, '\n');
+	i = 0;
+	length = 0;
 	while (p[i])
     {
 		j = 0;
-		while (p[i][j])
-		{
-			if (p[i][j] == '0' && (!a_valid_char(i, j, p)))
-				return (0);
-			if ((p[i][j] == 'S' || p[i][j] == 'N' || p[i][j] == 'W' || p[i][j] == 'E') && (!a_valid_char(i, j, p)))
-				return (0);
-			j++;
-		}
+		if (!check_spaces_supp(p, i, j))
+			return (0);
 		if (length < j)
 			length = j;
 		i++;
@@ -426,10 +466,11 @@ int check_spaces(t_data	*data, char *str)
 	data->map.length = length;
 	return (1);
 }
+
 int parsing(t_data	*data, char **av)
 {
 	char	*line = NULL;
-	char	*file = ft_strdup("\0");
+	char	*file = ft_strdup("");
 	char	*tmp;
 	int		i;
 

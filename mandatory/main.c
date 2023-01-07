@@ -5,15 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/08 13:13:56 by msouiyeh          #+#    #+#             */
-/*   Updated: 2023/01/06 20:31:09 by iouardi          ###   ########.fr       */
+/*   Created: 2023/01/06 21:23:39 by iouardi           #+#    #+#             */
+/*   Updated: 2023/01/07 02:00:52 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub.h"
-//ONE PLAYER
-//TAB
-//NO
+
 int	main(int ac, char **av)
 {
 	t_data	*game_data;
@@ -28,7 +26,7 @@ int	main(int ac, char **av)
 	game_data->vis_settings.fv = ft_calloc(3, sizeof(int));
 	if (parsing(game_data, av))
 		return (EXIT_FAILURE);
-	system ("leaks cub3D");
-	to_3d(game_data);
+	system("leaks cub3D");
+	// to_3d(game_data);
 	return (EXIT_SUCCESS);
 }
