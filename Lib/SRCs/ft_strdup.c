@@ -3,28 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 21:26:24 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/09 20:20:47 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/18 02:11:11 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
+#include "libft.h"
 
 char	*ft_strdup(const char *s1)
 {
-	size_t	i;
-	char	*cpy;
+	char	*s2;
 
-	cpy = (char *)ft_calloc(ft_strlen(s1) + 1, sizeof(char));
-	if (cpy == NULL)
-		return (0);
-	i = 0;
-	while (*s1)
-	{
-		cpy[i++] = *s1;
-		s1++;
-	}
-	return (cpy);
+	s2 = malloc((ft_strlen(s1) + 1) * sizeof(char));
+	if (s2 == NULL)
+		return (NULL);
+	ft_memcpy(s2, s1, sizeof(char) * (ft_strlen(s1) + 1));
+	return (s2);
 }

@@ -3,18 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achedmi <achedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/06 18:03:01 by achedmi           #+#    #+#             */
-/*   Updated: 2023/01/06 18:03:02 by achedmi          ###   ########.fr       */
+/*   Created: 2021/11/02 12:13:25 by iouardi           #+#    #+#             */
+/*   Updated: 2023/01/08 03:51:17 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../cub_lib.h"
 
 int	ft_isalnum(int c)
 {
-	if ((c > 47 && c < 58) || (c > 64 && c < 91) || (c > 96 && c < 123))
-		return (c);
+	if ((c >= '0' && c <= '9')
+		|| (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
+	{
+		return (1);
+	}
 	return (0);
 }

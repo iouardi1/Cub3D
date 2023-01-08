@@ -3,56 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 10:08:50 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/11 20:37:33 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/18 02:51:17 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
-
-static	int	aloclen(int n)
-{
-	int	len;
-
-	len = 1;
-	if (n > 0)
-		len = 0;
-	else if (n < 0)
-		n *= -1;
-	while (n)
-	{
-		len++;
-		n /= 10;
-	}
-	return (len);
-}
+#include "libft.h"
 
 char	*ft_itoa(int n)
 {
-	char	*str;
-	int		len;
-	int		nb;
+	int				i;
+	int				tmp;
+	unsigned int	nb;
+	char			*arr;
 
-	nb = -1;
-	len = aloclen(n);
-	str = (char *)ft_calloc((size_t)(len + 1), sizeof(char));
-	if (str == NULL)
+	i = 0;
+	tmp = n;
+	nb = n * (n >= 0) - n * (n < 0);
+	while (tmp && ++i)
+		tmp /= 10;
+	i += (n == 0) + (n < 0);
+	arr = (char *)malloc((i + 1) * sizeof(char));
+	if (arr == NULL)
 		return (NULL);
-	if (n == -2147483648 && ft_strlcpy(str, "-2147483648", 12))
-		return (str);
-	if (n == 0)
-		str[0] = '0';
-	if (n < 0)
+	arr[0] = '-' * (n != 0) + '0' * (!n);
+	arr[i--] = '\0';
+	while (nb)
 	{
-		str[0] = '-';
-		n *= -1;
+		arr[i--] = nb % 10 + '0';
+		nb /= 10;
 	}
-	while (++nb < len && n)
-	{
-		str[len - nb - 1] = (char)((n % 10) + 48);
-		n /= 10;
-	}
-	return (str);
+	return (arr);
 }

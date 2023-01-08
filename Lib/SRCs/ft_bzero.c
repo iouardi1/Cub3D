@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achedmi <achedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/06 18:02:42 by achedmi           #+#    #+#             */
-/*   Updated: 2023/01/06 18:02:42 by achedmi          ###   ########.fr       */
+/*   Created: 2021/11/03 12:26:13 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/07 14:08:25 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-
-#include "../cub_lib.h"
-
-void	ft_bzero(void	*s, size_t	n)
+void	ft_bzero(void *s, size_t n)
 {
-	while (n--)
+	size_t	i;
+
+	i = 0;
+	while (i < n)
 	{
-		*((char *)s) = *((char *)s) << 8;
-		s++;
+		((char *)s)[i] = 0;
+		i++;
 	}
 }

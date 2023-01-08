@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/06 18:25:27 by msouiyeh          #+#    #+#             */
-/*   Updated: 2021/11/10 21:54:53 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/09 15:35:57 by iouardi           #+#    #+#             */
+/*   Updated: 2023/01/08 04:47:25 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../cub_lib.h"
+
 int	ft_tolower(int c)
 {
-	if (c > 64 && c < 91)
-		return (c + 32);
+	if (c <= 'Z' && c >= 'A')
+	{
+		c += 32;
+		return (c);
+	}
 	return (c);
 }

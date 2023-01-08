@@ -3,31 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:44:17 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/05 14:54:00 by iouardi           #+#    #+#             */
+/*   Updated: 2023/01/08 03:56:49 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub_lib.h"
 
-size_t	ft_strlcpy(char	*dst, const	char	*src, size_t	dstsize)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	i;
-	size_t	srclen;
+	char	*ptr;
 
-	srclen = ft_strlen(src);
-	if (dstsize == 0)
-		return (srclen);
-	i = 0;
-	while (*src && i < dstsize - 1)
+	ptr = (char *)src;
+	if (!dstsize)
+		return (ft_strlen(src));
+	while (*ptr && (ptr - src) / sizeof(char) < dstsize - 1)
 	{
-		*dst = *src;
-		i++;
-		dst++;
-		src++;
+		*dst++ = *(char *)ptr++;
 	}
 	*dst = '\0';
-	return (srclen);
+	return (ft_strlen(src));
 }

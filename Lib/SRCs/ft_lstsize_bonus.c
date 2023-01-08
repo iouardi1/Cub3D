@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 13:09:24 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/17 22:48:15 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/18 04:33:07 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
+#include "libft.h"
 
 int	ft_lstsize(t_list *lst)
 {
-	int	i;
+	int		i;
 
-	i = 1;
-	if (lst == NULL)
-		return (0);
-	while (lst->next)
+	i = 0;
+	while (lst)
 	{
 		lst = lst->next;
 		i++;

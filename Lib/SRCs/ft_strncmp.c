@@ -3,23 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achedmi <achedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/06 18:00:55 by achedmi           #+#    #+#             */
-/*   Updated: 2023/01/06 18:00:56 by achedmi          ###   ########.fr       */
+/*   Created: 2021/11/04 09:49:07 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/18 02:08:25 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
+#include "libft.h"
 
-int ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t i;
+	size_t			i;
+	size_t			j;
+	unsigned char	*ptr1;
+	unsigned char	*ptr2;
 
 	i = 0;
-	if (n == 0)
-		return (n);
-	while (((unsigned char *)s1)[i] == ((unsigned char *)s2)[i] && s1[i] && s2[i] && i < n - 1)
+	j = 0;
+	ptr1 = (unsigned char *)s1;
+	ptr2 = (unsigned char *)s2;
+	while (i < n && (ptr1[i] || ptr2[j]) && ptr1[i] == ptr2[j])
+	{
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		j++;
+	}
+	if (i >= n)
+		return (0);
+	else
+		return (ptr1[i] - ptr2[j]);
 }

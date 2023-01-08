@@ -5,60 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/09 11:02:26 by msouiyeh          #+#    #+#             */
-/*   Updated: 2023/01/08 00:22:24 by iouardi          ###   ########.fr       */
+/*   Created: 2021/11/12 22:44:53 by iouardi           #+#    #+#             */
+/*   Updated: 2023/01/08 04:44:52 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
+#include "libft.h"
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	s1len;
-	size_t	s2len;
-	char	*final;
-	int		i;
+	char	*arr;
 
-	if (s1 == NULL || s2 == NULL)
+	if (!s1 || !s2)
 		return (NULL);
-	s1len = ft_strlen(s1);
-	s2len = ft_strlen(s2);
-	final = (char *)ft_calloc(s1len + s2len + 1, sizeof(char));
-	if (final == NULL)
+	arr = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (arr == NULL)
 		return (NULL);
-	i = -1;
-	while (s1[++i])
-		final[i] = s1[i];
-	i--;
-	while (s2[(++i) - (int)s1len])
-		final [i] = s2[i - (int)s1len];
-	return (final);
+	arr[0] = '\0';
+	ft_strlcat(arr, s1, ft_strlen(s1) + 1);
+	ft_strlcat(arr, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (arr);
 }
 
-char	*ft_strjoin1(const char *s1, const char *s2)
+char	*ft_strjoin1(char const *s1, char const *s2)
 {
-	size_t	s1len;
-	size_t	s2len;
-	char	*final;
-	int		i;
+	char	*arr;
 
-	if (s1 == NULL && s2 == NULL)
+	if (!s1 && !s2)
 		return (NULL);
 	if (!s1)
 		return ((char *)s2);
 	if (!s2)
 		return ((char *)s1);
-	s1len = ft_strlen(s1);
-	s2len = ft_strlen(s2);
-	final = (char *)ft_calloc(s1len + s2len + 1, sizeof(char));
-	if (final == NULL)
+	arr = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (arr == NULL)
 		return (NULL);
-	i = -1;
-	while (s1[++i])
-		final[i] = s1[i];
-	i--;
-	while (s2[(++i) - (int)s1len])
-		final [i] = s2[i - (int)s1len];
-	return (final);
+	arr[0] = '\0';
+	ft_strlcat(arr, s1, ft_strlen(s1) + 1);
+	ft_strlcat(arr, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (arr);
 }
-

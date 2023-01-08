@@ -52,6 +52,7 @@ KARIM_SRCS						=	envirement.c\
 									rotation.c\
 									tools.c\
 									ray_casting.c\
+									ray_casting1.c\
 									wall_building_tools.c
 
 IHSAN_SRCS_BONUS				=	parsing_bonus.c ray_casting_bonus.c utils_bonus.c parsing_texures_bonus.c parse_map_utils_bonus.c ray_casting_utils_bonus.c parsing_textures_utiles_bonus.c

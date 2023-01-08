@@ -3,37 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 21:39:58 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/12 02:17:10 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/18 02:58:38 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
+#include "libft.h"
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	char	c;
-
+	if (n == -2147483648)
+		return (ft_putstr_fd("-2147483648", fd));
 	if (n < 0)
 	{
-		if (n == -2147483648)
-		{
-			write(fd, "-2147483648", 11);
-			return ;
-		}
-		n = n * -1;
-		write(fd, "-", 1);
+		ft_putchar_fd('-', fd);
+		return (ft_putnbr_fd(-n, fd));
 	}
-	if (n < 10)
-	{
-		c = n + 48;
-		write(fd, &c, 1);
-	}
+	if (n <= 9)
+		ft_putchar_fd(n + 48, fd);
 	if (n > 9)
 	{
 		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
+		ft_putchar_fd(n % 10 + 48, fd);
 	}
 }

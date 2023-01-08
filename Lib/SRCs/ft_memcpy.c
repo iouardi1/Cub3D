@@ -3,30 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/07 16:12:30 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/05 11:04:30 by iouardi           #+#    #+#             */
+/*   Updated: 2023/01/08 03:54:03 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub_lib.h"
 
-void	*ft_memcpy(void	*dst, const	void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	size_t	i;
-	char	*d;
-	char	*s;
+	unsigned char	*temp;
 
-	if (!dst && !src)
-		return (NULL);
-	d = (char *)dst;
-	s = (char *)src;
-	i = 0;
-	while (i < n)
-	{
-		d[i] = s[i];
-		i++;
-	}
-	return (dst);
+	if (!dest && !src)
+		return (0);
+	temp = dest;
+	while (n--)
+		*temp++ = *(unsigned char *)src++;
+	return (dest);
 }

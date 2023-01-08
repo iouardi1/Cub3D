@@ -3,38 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/09 09:05:19 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/11 12:31:56 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/16 15:42:48 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
+#include "libft.h"
 
-char	*ft_substr(const char *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	length;
-	char	*ptr;
-	size_t	i;
+	char			*ptr;
+	unsigned int	i;
+	size_t			temp;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
-	i = 0;
-	length = ft_strlen(s);
-	if ((size_t)start >= length)
-		length = 1;
-	else if (length - (size_t)start > len)
-		length = len + 1;
-	else if (length - (size_t)start <= len)
-		length = length - (size_t)start + 1;
-	ptr = (char *)ft_calloc(length, 1);
+	if (len > ft_strlen(s))
+		temp = ft_strlen(s);
+	else
+		temp = len;
+	if (start >= ft_strlen(s))
+	{
+		ptr = malloc(sizeof(char) * 1);
+		ptr[0] = '\0';
+		return (ptr);
+	}
+	ptr = malloc((temp + 1) * sizeof(char));
 	if (ptr == NULL)
 		return (NULL);
-	while (i < length - 1)
-	{
-		ptr[i] = s[i + (size_t)start];
-		i++;
-	}
+	i = 0;
+	while (i < temp)
+		ptr[i++] = s[start++];
+	ptr[i] = '\0';
 	return (ptr);
 }

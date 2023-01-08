@@ -3,33 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:32:03 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/05 18:22:38 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/18 04:16:01 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
+#include "libft.h"
 
-size_t	ft_strlcat(char	*dst, const	char	*src, size_t	dstsize)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
+	size_t	src_length;
+	size_t	dst_length;
+	size_t	dsst_length;
 	size_t	i;
-	size_t	j;
-	size_t	nb;
 
-	j = ft_strlen(src);
-	if (!dst && dstsize == 0)
-		return (j);
-	i = ft_strlen((const char *)dst);
-	if (dstsize <= i || dstsize == 0)
-		return (dstsize + j);
-	nb = 0;
-	while (src[nb] && nb < (dstsize - i) - 1)
+	if (!dst && !size)
+		return (ft_strlen(src));
+	src_length = ft_strlen(src);
+	dst_length = ft_strlen(dst);
+	dsst_length = src_length;
+	i = 0;
+	if (dst_length < size)
+		dsst_length += dst_length;
+	else
+		dsst_length += size;
+	while (src[i] && dst_length + 1 < size)
 	{
-		dst[i + nb] = src[nb];
-		nb++;
+		dst[dst_length++] = src[i++];
 	}
-	dst[i + nb] = '\0';
-	return (i + j);
+	dst[dst_length] = '\0';
+	return (dsst_length);
 }

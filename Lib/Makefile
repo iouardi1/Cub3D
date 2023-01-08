@@ -21,8 +21,7 @@ SRCS 		=	ft_atoi.c ft_bzero.c ft_calloc.c \
 				ft_lstnew_bonus.c \
 				ft_lstsize_bonus.c \
 				get_next_line.c	\
-				ft_in_charset.c \
-				ft_strchrset.c	\
+				get_next_line_utils.c	\
 				ft_realloc.c	\
 
 OBJS 		= 	$(addprefix objs/, $(SRCS:.c=.o))

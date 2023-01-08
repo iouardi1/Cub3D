@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/06 18:08:19 by msouiyeh          #+#    #+#             */
-/*   Updated: 2021/11/10 21:54:20 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/06 19:00:22 by iouardi           #+#    #+#             */
+/*   Updated: 2023/01/08 04:47:55 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../cub_lib.h"
+
 int	ft_toupper(int c)
 {
-	if (c > 96 && c < 123)
-		return (c - 32);
+	if (c <= 'z' && c >= 'a')
+	{
+		c -= 32;
+		return (c);
+	}
 	return (c);
 }

@@ -3,93 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 18:24:42 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:52:16 by msouiyeh         ###   ########.fr       */
+/*   Created: 2023/01/08 04:24:55 by iouardi           #+#    #+#             */
+/*   Updated: 2023/01/08 04:29:29 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub_lib.h"
 
-char	*get_strjoin(char **s1, char *s2)
+char	*ft_readline(char *str, char *buffer, int fd)
 {
-	size_t	s1len;
-	size_t	s2len;
-	char	*final;
-	int		i;
+	char	*temp;
+	int		buffer_len;
 
-	if (*s1 == NULL || s2 == NULL)
-		return (ft_strdup(""));
-	s1len = ft_strlen(*s1);
-	s2len = ft_strlen(s2);
-	final = (char *)ft_calloc(s1len + s2len + 1, sizeof(char));
-	if (final == NULL)
+	temp = NULL;
+	buffer_len = 1;
+	if (!str)
+		str = ft_strdup1("");
+	while (buffer_len > 0 && !ft_strchr1(str, '\n'))
+	{
+		buffer_len = read(fd, buffer, BUFFER_SIZE);
+		buffer[buffer_len] = '\0';
+		temp = ft_strjoin2(str, buffer);
+		free(str);
+		str = temp;
+	}
+	return (str);
+}
+
+char	*ft_strdup1(const char *s1)
+{
+	char	*s2;
+
+	s2 = malloc((ft_strlen(s1) + 1) * sizeof(char));
+	if (s2 == NULL)
 		return (NULL);
-	i = -1;
-	while (s1[0][++i])
-		final[i] = s1[0][i];
-	i--;
-	while (s2[(++i) - (int)s1len])
-		final [i] = s2[i - (int)s1len];
-	free(*s1);
-	*s1 = NULL;
-	return (final);
+	ft_memcpy1(s2, s1, sizeof(char) * (ft_strlen(s1) + 1));
+	return (s2);
 }
 
-char	*handel_the_shit(char	**saved)
+char	*get_line(char *str)
 {
-	char	*final;
-	char	*tp;
+	char	*line;
 	int		i;
 
-	i = ft_strlen(*saved);
-	final = NULL;
-	if (ft_strchr(*saved, '\n'))
-	{
-		final = ft_substr(*saved, 0, ft_strchr(*saved, '\n') - *saved + 1);
-		tp = *saved;
-		*saved = ft_substr(*saved, ft_strchr(*saved, '\n') - *saved + 1, i);
-		free_it(&tp);
-		return (final);
-	}
-	else
-	{
-		final = ft_strdup(*saved);
-		free_it(saved);
-		return (final);
-	}
-}
-
-char	*free_it(char	**target)
-{
-	free(*target);
-	*target = NULL;
-	return (NULL);
+	i = 0;
+	while (str[i] != '\n' && str[i])
+		i++;
+	line = malloc((++i + 1) * sizeof(char));
+	ft_memcpy1(line, str, i);
+	line[i] = '\0';
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	char		str[BUFFER_SIZE + 1];
-	static char	*saved;
-	char		*final;
-	int			re_ad;
+	char		buffer[BUFFER_SIZE + 1];
+	static char	*str;
+	char		*line;
+	size_t		buffer_len;
+	char		*temp;
 
-	re_ad = 1;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	line = NULL;
+	temp = NULL;
+	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, buffer, 0) == -1)
 		return (NULL);
-	if (!saved)
-		saved = ft_strdup("");
-	while (re_ad > 0 && !ft_strchr(saved, '\n'))
-	{
-		re_ad = read(fd, str, BUFFER_SIZE);
-		if (re_ad < 0)
-			return (free_it(&saved));
-		str[re_ad] = '\0';
-		saved = get_strjoin(&saved, str);
-	}
-	final = handel_the_shit(&saved);
-	if (final && !ft_strlen(final))
-		free_it(&final);
-	return (final);
+	buffer_len = 1;
+	str = ft_readline(str, buffer, fd);
+	line = get_line(str);
+	if (ft_strchr1(str, '\n'))
+		temp = ft_strdup1(ft_strchr1(str, '\n'));
+	free(str);
+	str = temp;
+	if (!ft_strlen(line))
+		return (free(str), free(line), NULL);
+	return (line);
 }

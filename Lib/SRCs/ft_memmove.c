@@ -3,38 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 12:53:30 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/05 12:33:57 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/18 01:35:49 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
+#include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src,	size_t len)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	i;
-	char	*tmp;
+	unsigned char	*temp;
+	unsigned char	*s;
 
-	tmp = (char *)dst;
-	i = 0;
-	if (dst == NULL && src == NULL)
-		return (0);
-	if (src < dst && src + len > dst)
+	temp = dst;
+	s = (unsigned char *)src;
+	if (!temp && !s)
+		return (NULL);
+	if (!ft_memcmp(temp, s, len))
+		return (dst);
+	if (temp > s && temp < s + len && len)
 	{
-		while (--len > 0)
-			tmp[len] = ((char *)src)[len];
-		if (len == 0)
-			tmp[len] = ((char *)src)[len];
+		temp += len;
+		s += len;
+		while (len--)
+			*--temp = *--s;
 	}
 	else
-	{
-		while (i < len)
-		{
-			tmp[i] = ((char *)src)[i];
-			i++;
-		}
-	}
+		while (len--)
+			*temp++ = *(unsigned char *)src++;
 	return (dst);
 }

@@ -3,24 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/06 19:02:25 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/06 18:48:04 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/08 19:31:50 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
+#include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *str, int c)
 {
-	while (*s)
+	size_t	i;
+	size_t	j;
+
+	j = -1;
+	i = ft_strlen(str);
+	while (++j < i)
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		if (str[j] == (char)c)
+			return ((char *)(str + j));
 	}
-	if (*s == c)
-		return ((char *)s);
+	if (str[j] == c)
+		return ((char *)(str + j));
 	return (NULL);
 }

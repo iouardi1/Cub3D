@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/07 11:00:38 by msouiyeh          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:58 by msouiyeh         ###   ########.fr       */
+/*   Created: 2021/11/06 13:25:31 by iouardi           #+#    #+#             */
+/*   Updated: 2021/11/18 02:07:10 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_lib.h"
+#include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *str, int c)
 {
-	int	i;
+	char	*ptr;
+	int		i;
 
-	i = ft_strlen(s);
+	ptr = (char *)str;
+	i = ft_strlen(ptr);
 	while (i >= 0)
 	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
+		if (ptr[i] == (char)c)
+			return (&ptr[i]);
 		i--;
 	}
 	return (NULL);
