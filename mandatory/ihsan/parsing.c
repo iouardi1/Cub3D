@@ -6,11 +6,11 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/07 23:38:31 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/08 02:38:16 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ihsan.h"
+#include "../includes/ihsan.h"
 
 char	*parsing_supp2(char *file, char *line, int fd)
 {
@@ -20,7 +20,6 @@ char	*parsing_supp2(char *file, char *line, int fd)
 	file = ft_strjoin(file, line);
 	free(tmp);
 	free(line);
-    line = NULL;
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -30,7 +29,7 @@ char	*parsing_supp2(char *file, char *line, int fd)
 		if (!line)
 		{
 			free(line);
-			break;
+			break ;
 		}
 		free(line);
 	}
@@ -39,14 +38,16 @@ char	*parsing_supp2(char *file, char *line, int fd)
 
 char	*parsing_supp1(char *file, char **av)
 {
-	char	*line = NULL;
+	char	*line;
+	int		fd;
 
+	line = NULL;
 	if (!check_maps_name(av[1]))
 	{
 		printf("Please enter a valid name\n");
 		return (NULL);
 	}
-	int fd = open(av[1], O_RDONLY);
+	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 	{
 		printf("file failed to be opened\n");
@@ -63,8 +64,7 @@ char	*parsing_supp1(char *file, char **av)
 	return (file);
 }
 
-
-int parsing(t_data	*data, char **av)
+int	parsing(t_data	*data, char **av)
 {
 	char	*file;
 	int		i;

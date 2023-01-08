@@ -5,16 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/06 21:23:39 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/07 23:55:05 by iouardi          ###   ########.fr       */
+/*   Created: 2023/01/06 18:03:58 by achedmi           #+#    #+#             */
+/*   Updated: 2023/01/08 00:41:35 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "includes/cub.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_data *game_data;
+	t_data	*game_data;
 
 	if (ac != 2)
 	{

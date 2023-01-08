@@ -6,11 +6,11 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 23:23:53 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/07 23:24:52 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/08 03:08:01 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ihsan.h"
+#include "../includes/ihsan.h"
 
 void	check_players_angle(t_data *data)
 {
@@ -52,7 +52,7 @@ int	get_players_position_supp2(t_data *data, int i, int j, int p)
 		&& data->map.map[i][j] != 'N' && data->map.map[i][j] != 'E' \
 			&& data->map.map[i][j] != 'S' && data->map.map[i][j] != 'W' \
 				&& data->map.map[i][j] != ' ' && data->map.map[i][j] != '\n')
-					return (0);
+		return (0);
 	if (data->map.map[i][j] == 'N' || data->map.map[i][j] == 'W' || \
 		data->map.map[i][j] == 'E' || data->map.map[i][j] == 'S')
 	{
@@ -65,9 +65,9 @@ int	get_players_position_supp2(t_data *data, int i, int j, int p)
 
 int	get_players_position(t_data	*data)
 {
-	int        i;
-    int        p;
-    int        j;
+	int		i;
+	int		p;
+	int		j;
 
 	i = 0;
 	p = 0;
@@ -75,7 +75,7 @@ int	get_players_position(t_data	*data)
 	{
 		j = 0;
 		while (data->map.map[i][j])
-        {
+		{
 			p = get_players_position_supp2(data, i, j, p);
 			j++;
 		}

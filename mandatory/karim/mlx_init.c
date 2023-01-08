@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msouiyeh <msouiyeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achedmi <achedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/30 17:25:28 by achedmi           #+#    #+#             */
-/*   Updated: 2022/11/08 00:26:28 by msouiyeh         ###   ########.fr       */
+/*   Created: 2023/01/06 18:04:08 by achedmi           #+#    #+#             */
+/*   Updated: 2023/01/06 18:04:08 by achedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../includes/settings.h"
 

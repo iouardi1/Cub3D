@@ -6,11 +6,11 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 23:22:43 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/07 23:23:25 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/08 03:06:13 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ihsan.h"
+#include "../includes/ihsan.h"
 
 int	check_ranges_supp2(t_data *data, char **str, char l)
 {
@@ -36,7 +36,8 @@ int	check_ranges(t_data *data, char l)
 {
 	char	**str;
 
-	if (!check_ranges_supp1(data->vis_settings.f) || !check_ranges_supp1(data->vis_settings.c))
+	if (!check_ranges_supp1(data->vis_settings.f) || \
+		!check_ranges_supp1(data->vis_settings.c))
 		return (0);
 	if (l == 'f')
 		str = ft_split(data->vis_settings.f, ',');
@@ -45,7 +46,7 @@ int	check_ranges(t_data *data, char l)
 	if (!valid_int(str))
 	{
 		free_double_array(str);
-	    return (0);
+		return (0);
 	}
 	if (!check_ranges_supp2(data, str, l))
 	{
@@ -56,7 +57,7 @@ int	check_ranges(t_data *data, char l)
 	return (1);
 }
 
-int textures_parse_supp1(t_data *data, char **p)
+int	textures_parse_supp1(t_data *data, char **p)
 {
 	int		i;
 	int		j;
@@ -105,13 +106,14 @@ int	textures_parse_supp2(char **p, int i)
 
 int	first_line_map(char *line)
 {
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	while (line[i] && line[i + 1])
 	{
 		if (line[i] == '\n' && line[i + 1] == '1')
-		    return (i + 1);
-        i++;
+			return (i + 1);
+		i++;
 	}
 	return (0);
 }
