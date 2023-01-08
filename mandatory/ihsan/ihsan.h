@@ -1,14 +1,37 @@
 #ifndef IHSAN_H
 #define IHSAN_H
 
-#include "../../Lib/cub_lib.h"
-#include "../includes/global_includes.h"
 #include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <math.h>
+#include "../includes/global_includes.h"
+#include "../includes/settings.h"
 
-char	**ft_split(char const *s, char c);
-char	*ft_strnstr(const char	*big, const char *little, size_t len);
-int     check_maps_name(char *name);
+
+int		check_maps_name(char *name);
 void	free_double_array(char **arr);
-
+int		last_line(char	*str);
+int		check_borders(char *str);
+int		check_roof_and_floor(char *str);
+int		textures_parse(t_data *data, char *str);
+int		check_ranges_supp1(char	*str);
+int		valid_int(char **str);
+int		check_identifier(t_data	*data, char	**str);
+int		check_identifier1(t_data *data, char **str);
+int		first_line_map(char *line);
+int		textures_parse_supp2(char **p, int i);
+int		textures_parse_supp1(t_data *data, char **p);
+int		check_ranges(t_data *data, char l);
+int		check_ranges_supp2(t_data *data, char **str, char l);
+int		get_players_position(t_data	*data);
+int		get_players_position_supp2(t_data *data, int i, int j, int p);
+void	get_players_position_supp1(t_data *data, int i, int j);
+int		get_out(t_data *game_data);
+void	check_players_angle(t_data *data);
+int		check_spaces(t_data	*data, char *str);
+int		check_spaces_supp(char **p, int i, int j);
+int		check_empty_lines(char *p);
+int		a_valid_char(int i, size_t j, char **p);
 
 #endif

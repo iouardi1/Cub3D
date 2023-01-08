@@ -37,6 +37,11 @@ M_INCLUDES						=	$(addprefix ${MANDATORY_INCLUDES_PATH}/, cub.h global_includes
 B_INCLUDES						=	$(addprefix ${BONUS_INCLUDES_PATH}/, cub_bonus.h global_includes_bonus.h settings_bonus.h parsing_bonus.h)
 
 ihsan_SRCS					=	parsing.c \
+								parsing1.c \
+								parsing2.c \
+								parsing3.c \
+								parsing4.c \
+								parsing5.c \
 								ray_casting.c \
 								utils.c \
 								ray_casting_utils.c \
