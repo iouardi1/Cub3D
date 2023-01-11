@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 23:22:43 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/08 03:06:13 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/11 17:14:54 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	textures_parse_supp1(t_data *data, char **p)
 
 	i = 0;
 	j = 0;
-	while (p[j] && i < 6)
+	while (p[j] && i < 6 && !check_tabs(p[j]))
 	{
 		pp = ft_split(p[j], ' ');
 		if (!pp[0])

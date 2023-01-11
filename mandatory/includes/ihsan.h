@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:32:33 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/08 03:33:07 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/11 17:16:20 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ int		check_spaces(t_data	*data, char *str);
 int		check_spaces_supp(char **p, int i, int j);
 int		check_empty_lines(char *p);
 int		a_valid_char(int i, size_t j, char **p);
+void	print_error(char *err);
+int		check_tabs(char *str);
 
 #endif

@@ -6,11 +6,34 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 12:59:23 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/08 04:32:35 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/11 17:15:14 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ihsan.h"
+
+void	print_error(char *err)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(err, 2);
+}
+
+int	check_tabs(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\t')
+		{
+			print_error("invalid map\n");
+			exit (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 char	*parsing_supp2(char *file, char *line, int fd)
 {
@@ -44,19 +67,19 @@ char	*parsing_supp1(char *file, char **av)
 	line = NULL;
 	if (!check_maps_name(av[1]))
 	{
-		printf("Please enter a valid name\n");
+		print_error("Please enter a valid name\n");
 		return (NULL);
 	}
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 	{
-		printf("file failed to be opened\n");
+		print_error("file failed to be opened\n");
 		return (NULL);
 	}
 	line = get_next_line(fd);
 	if (!line)
 	{
-		printf("empty map!\n");
+		print_error("empty map!\n");
 		free(line);
 		return (NULL);
 	}
@@ -73,14 +96,14 @@ int	parsing(t_data	*data, char **av)
 	file = parsing_supp1(file, av);
 	if (!file || !textures_parse(data, file))
 	{
-		printf("textures error\n");
+		print_error("textures error\n");
 		return (1);
 	}
 	i = first_line_map(file);
 	if (!last_line(file + i) || !check_borders(file + i) || \
 		!check_spaces(data, file + i) || !get_players_position(data))
 	{
-		printf("invalid map\n");
+		print_error("invalid map\n");
 		return (1);
 	}
 	return (0);

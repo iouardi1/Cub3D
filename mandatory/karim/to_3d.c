@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   to_3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achedmi <achedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 20:50:57 by achedmi           #+#    #+#             */
-/*   Updated: 2023/01/08 05:12:25 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/11 16:06:57 by achedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	textures_init(t_data *game_data)
 		index_to_img(game_data, i, &width, &height);
 		if (!game_data->mlx_settings.imgs[i].img)
 		{
-			ft_putstr_fd("Wrong texture\n", 2);
+			print_error("Wrong texture\n");
 			exit(1);
 		}
 		game_data->mlx_settings.imgs[i].addr = mlx_get_data_addr(\
