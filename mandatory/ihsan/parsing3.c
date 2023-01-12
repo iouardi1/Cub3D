@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 23:22:43 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/08 03:06:13 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/12 05:55:13 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,16 @@ int	textures_parse_supp1(t_data *data, char **p)
 	int		i;
 	int		j;
 	char	**pp;
+	char	*tmp;
 
 	i = 0;
 	j = 0;
-	while (p[j] && i < 6)
+	while (p[j] && i < 6 && !check_tabs(p[j]))
 	{
-		pp = ft_split(p[j], ' ');
+		tmp = p[j];
+		p[j] = ft_strtrim(tmp, " ");
+		free (tmp);
+		pp = ft_split1(p[j], ' ');
 		if (!pp[0])
 		{
 			j++;
@@ -75,10 +79,7 @@ int	textures_parse_supp1(t_data *data, char **p)
 			continue ;
 		}
 		if (!pp[1] || !check_identifier(data, pp))
-		{
-			free_double_array(pp);
-			return (0);
-		}
+			return (free_double_array(pp));
 		free_double_array(pp);
 		i++;
 		j++;
@@ -104,6 +105,21 @@ int	textures_parse_supp2(char **p, int i)
 	return (1);
 }
 
+int	first_line_map_supp(char *line, int i)
+{
+	while (line[i])
+	{
+		while (line[i] == ' ')
+			i++;
+		if (line[i] == '1')
+			return (i);
+		else
+			return (0);
+		i++;
+	}
+	return (0);
+}
+
 int	first_line_map(char *line)
 {
 	int		i;
@@ -111,8 +127,8 @@ int	first_line_map(char *line)
 	i = 0;
 	while (line[i] && line[i + 1])
 	{
-		if (line[i] == '\n' && line[i + 1] == '1')
-			return (i + 1);
+		if (line[i] == '\n' && first_line_map_supp(line, i + 1))
+			return (first_line_map_supp(line, i + 1));
 		i++;
 	}
 	return (0);

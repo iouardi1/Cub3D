@@ -6,13 +6,13 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 23:16:59 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/08 03:03:35 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/11 22:12:42 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ihsan.h"
 
-int	check_identifier1(t_data *data, char **str)
+int	check_identifier1(t_data *data, char **str, char *p)
 {
 	if (str[0] && !ft_strncmp(str[0], "F", ft_strlen(str[0])))
 	{
@@ -24,6 +24,11 @@ int	check_identifier1(t_data *data, char **str)
 		data->c_c += 1;
 		data->vis_settings.c = ft_strdup(str[1]);
 	}
+	else if (!ft_strncmp(str[0], "EA", ft_strlen(str[0])))
+	{
+		data->ea_c += 1;
+		data->vis_settings.ea = ft_strdup(p);
+	}
 	else
 		return (0);
 	return (1);
@@ -31,30 +36,30 @@ int	check_identifier1(t_data *data, char **str)
 
 int	check_identifier(t_data	*data, char	**str)
 {
-	if (str[2])
-		return (0);
+	char	*p;
+
+	p = ft_strtrim(str[1], " ");
 	if (!ft_strncmp(str[0], "NO", ft_strlen(str[0])))
 	{
 		data->no_c += 1;
-		data->vis_settings.no = ft_strdup(str[1]);
+		data->vis_settings.no = ft_strdup(p);
 	}
 	else if (!ft_strncmp(str[0], "SO", ft_strlen(str[0])))
 	{
 		data->so_c += 1;
-		data->vis_settings.so = ft_strdup(str[1]);
+		data->vis_settings.so = ft_strdup(p);
 	}
 	else if (!ft_strncmp(str[0], "WE", ft_strlen(str[0])))
 	{
 		data->we_c += 1;
-		data->vis_settings.we = ft_strdup(str[1]);
+		data->vis_settings.we = ft_strdup(p);
 	}
-	else if (!ft_strncmp(str[0], "EA", ft_strlen(str[0])))
+	else if (!check_identifier1(data, str, p))
 	{
-		data->ea_c += 1;
-		data->vis_settings.ea = ft_strdup(str[1]);
-	}
-	else if (!check_identifier1(data, str))
+		free (p);
 		return (0);
+	}
+	free (p);
 	return (1);
 }
 

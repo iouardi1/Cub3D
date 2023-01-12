@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 23:16:48 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/08 02:44:44 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/11 23:19:39 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ int	last_line(char	*str)
 	i = 0;
 	while (str[i])
 		i++;
-	if (str[i - 1] == '1' || str[i - 1] == ' ' || str[i - 1] == '\t')
+	if (str[i - 1] == '1' || str[i - 1] == ' ')
 		return (1);
 	return (0);
 }
 
-void	free_double_array(char **arr)
+int	free_double_array(char **arr)
 {
 	int		i;
 
@@ -96,4 +96,5 @@ void	free_double_array(char **arr)
 		i++;
 	}
 	free(arr);
+	return (0);
 }

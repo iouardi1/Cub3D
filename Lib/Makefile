@@ -23,6 +23,7 @@ SRCS 		=	ft_atoi.c ft_bzero.c ft_calloc.c \
 				get_next_line.c	\
 				get_next_line_utils.c	\
 				ft_realloc.c	\
+				ft_split1.c
 
 OBJS 		= 	$(addprefix objs/, $(SRCS:.c=.o))
 

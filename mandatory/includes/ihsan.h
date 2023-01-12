@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:32:33 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/08 03:33:07 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/11 23:20:47 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "settings.h"
 
 int		check_maps_name(char *name);
-void	free_double_array(char **arr);
+int		free_double_array(char **arr);
 int		last_line(char	*str);
 int		check_borders(char *str);
 int		check_roof_and_floor(char *str);
@@ -29,7 +29,7 @@ int		textures_parse(t_data *data, char *str);
 int		check_ranges_supp1(char	*str);
 int		valid_int(char **str);
 int		check_identifier(t_data	*data, char	**str);
-int		check_identifier1(t_data *data, char **str);
+int		check_identifier1(t_data *data, char **str, char *p);
 int		first_line_map(char *line);
 int		textures_parse_supp2(char **p, int i);
 int		textures_parse_supp1(t_data *data, char **p);
@@ -44,5 +44,8 @@ int		check_spaces(t_data	*data, char *str);
 int		check_spaces_supp(char **p, int i, int j);
 int		check_empty_lines(char *p);
 int		a_valid_char(int i, size_t j, char **p);
+void	print_error(char *err);
+int		check_tabs(char *str);
+void	check_path(char *pp, int i);
 
 #endif

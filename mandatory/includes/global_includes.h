@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global_includes.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: achedmi <achedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 15:34:09 by achedmi           #+#    #+#             */
-/*   Updated: 2023/01/08 03:32:03 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/11 15:57:54 by achedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 // typedefs
 typedef unsigned int	t_size;
 typedef int				t_index;
-// typedef int t_exit_status;
 
 // structs
 typedef struct s_visual_settings

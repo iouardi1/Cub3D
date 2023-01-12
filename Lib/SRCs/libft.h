@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 18:35:58 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/08 04:51:52 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/11 20:41:44 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_putendl_fd(char *s, int fd);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	**ft_split(char const *s, char c);
+char	**ft_split1(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin1(char const *s1, char const *s2);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));

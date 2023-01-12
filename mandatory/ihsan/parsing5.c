@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 23:25:47 by iouardi           #+#    #+#             */
-/*   Updated: 2023/01/08 03:12:59 by iouardi          ###   ########.fr       */
+/*   Updated: 2023/01/11 23:20:08 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	check_spaces(t_data	*data, char *str)
 	{
 		j = check_spaces_supp(p, i, j);
 		if (!j)
-			return (0);
+			return (free_double_array(p));
 		if (length < j)
 			length = j;
 		i++;
@@ -85,4 +85,29 @@ int	check_spaces(t_data	*data, char *str)
 	data->map.height = i;
 	data->map.length = length;
 	return (1);
+}
+
+void	check_path(char *pp, int i)
+{
+	char	*path;
+	int		j;
+
+	j = 0;
+	if (i >= 4)
+		return ;
+	path = ft_strnstr(pp, ".xpm", ft_strlen(pp));
+	if (!path)
+	{
+		print_error("bad path\n");
+		exit(1);
+	}
+	while (path[j + 4])
+	{
+		if (path[j + 4] != ' ')
+		{
+			print_error("bad path\n");
+			exit(1);
+		}
+		j++;
+	}
 }
